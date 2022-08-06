@@ -1,7 +1,7 @@
 "use strict";
 
 // Data needed for a later exercise
-const flights = "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+// const flights = "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
 
 // Data needed for first part of the section
 const restaurant = {
@@ -459,12 +459,118 @@ const gameEvents = new Map([
 // console.log(test.slice(-3)); //ngs
 // console.log(test.slice(3, -3)); //t stri
 
-const priceGB = "288,97£";
-console.log(priceGB);
+// const priceGB = "288,97£";
+// console.log(priceGB);
 
-const priceUS = priceGB.slice(0, -1) + "$";
-const priceUS2 = priceUS.replace(",", ".");
-console.log(priceUS2);
+// const priceUS = priceGB.slice(0, -1) + "$";
+// const priceUS2 = priceUS.replace(",", ".");
+// console.log(priceUS2);
 
-let test = "qwertqw";
-console.log(test.replaceAll("q", "3")); // 3wert3w
+// let test = "qwertqw";
+// console.log(test.replaceAll("q", "3")); // 3wert3w
+
+// ------------------------------------------------------------
+
+// let teststr = "test string";
+// console.log(teststr.split(" "));
+// console.log(teststr.padEnd(25, "!"));
+
+function capitalize(str) {
+    let strArr = str.split(" ");
+    for (let i = 0; i < strArr.length; i++) {
+        let temp = strArr[i].split("");
+        temp[0] = temp[0].toUpperCase();
+        strArr[i] = temp.join("");
+    }
+    return strArr.join(" ");
+}
+// console.log(capitalize("test tesdf"));
+
+function mascCreditCard(card) {
+    let str = String(card);
+    let strl = str.length;
+    str = str.slice(str.length - 4, str.length);
+    str = str.padStart(strl, "*");
+    return str;
+}
+// console.log(mascCreditCard(33334444));
+// console.log(mascCreditCard(1111222233334444));
+
+// --------------------------------------------------------------------------
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// let div = document.createElement("div");
+// div.className = "alert";
+// div.style = " width: 100%; display:flex; justify-content:space-around; align-items:center";
+// div.innerHTML = "<textarea id='inp' name='inp'rows='5' cols='33'></textarea>";
+// div.innerHTML += "<button class='btn' type='submit' style='height:50px; width:150px; border-radius:10px; border:0px'>Translate</button>";
+// document.body.append(div);
+
+// document.querySelector(".btn").addEventListener("click", () => {
+//     let inp = document.querySelector("#inp").value;
+//     console.log(inp);
+//     let inpArr = inp.split("\n");
+//     console.log(inpArr);
+//     translateToCamelCase(inpArr);
+// });
+
+// function translateToCamelCase(arr) {
+//     for (let i = 0; i < arr.length; i++) {
+//         console.log(arr[i]);
+//         arr[i] = arr[i].trim().toLowerCase();
+//         let strArr = arr[i].split("_");
+//         for (let i = 1; i < strArr.length; i++) {
+//             let temp = strArr[i].split("");
+//             temp[0] = temp[0].toUpperCase();
+//             strArr[i] = temp.join("");
+//         }
+//         arr[i] = strArr.join("");
+//         arr[i] = arr[i].padEnd(20, " ") + "✅".repeat(i + 1);
+//     }
+
+//     for (const el of arr) {
+//         console.log(el);
+//     }
+// }
+
+// ---------------------------------------------------------------
+const flights = "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+let arr = flights.split("+");
+console.log(arr);
+let maxLength = 0;
+for (let i = 0; i < arr.length; i++) {
+    let [status, from, to, time] = arr[i].split(";");
+    let res = `${status.replace(/_/g, " ")} from ${from.slice(0, 3).toLocaleUpperCase()} to ${to.slice(0, 3).toLocaleUpperCase()} (${time.replace(":", "h")})`;
+    console.log(res);
+    arr[i] = res;
+    maxLength = maxLength < res.length ? res.length : maxLength;
+}
+console.log(maxLength);
+for (let i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].includes("Delayed") ? "🔴" + arr[i] : " " + arr[i];
+    arr[i] = arr[i].padStart(maxLength + 3, " ");
+}
+
+for (const el of arr) {
+    console.log(el, el.length);
+}
