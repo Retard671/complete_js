@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <style>
+            #field {
+                width: 200px;
+                height: 150px;
+                border: 10px solid black;
+                background-color: #00ff00;
+                overflow: hidden;
+
+                position: relative;
+                z-index: 1;
+            }
+            #field:hover {
+                cursor: pointer;
+            }
+            #ball {
+                position: absolute;
+                z-index: 2;
+                transition: all 0.2s linear;
+            }
+        </style>
+    </head>
+
+    <body style="height: 2000px">
+        Нажмите на поле для перемещения мяча.
+        <br />
+        Мяч не должен выходить за границы поля.
+
+        <div id="field">
+            <img src="https://ru.js.cx/clipart/ball.svg" id="ball" /> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        </div>
+
+        <script>
+            let field = document.querySelector("#field");
+            let ball = document.querySelector("#ball");
+
+            field.addEventListener("click", function (e) {
+                let border = Number.parseFloat(window.getComputedStyle(field).border);
+                let ballwidth = Number.parseFloat(window.getComputedStyle(ball).width) / 2;
+
+                let fieldWidth = Number.parseFloat(window.getComputedStyle(field).width);
+                let fieldHeight = Number.parseFloat(window.getComputedStyle(field).height);
+
+                let bst = e.y - ballwidth - border - field.getBoundingClientRect().y;
+                let bsl = e.x - ballwidth - border - field.getBoundingClientRect().x;
+
+                if (bst < 0) {
+                    bst = 0;
+                }
+                if (bsl < 0) {
+                    bsl = 0;
+                }
+                if (bsl > fieldWidth - ballwidth * 2) {
+                    bsl = fieldWidth - ballwidth * 2;
+                }
+                if (bst > fieldHeight - ballwidth * 2) {
+                    bst = fieldHeight - ballwidth * 2;
+                }
+                console.log(window.getComputedStyle(ball).width);
+
+                ball.style.top = bst + "px";
+                ball.style.left = bsl + "px";
+
+                console.log("ball.style.top", ball.style.top);
+            });
+        </script>
+    </body>
+</html>
